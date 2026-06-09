@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TA Recruitment Agency Berlin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a1628;--navy2:#122040;--navy3:#0d1c38;--gold:#c9a84c;--gold-light:#e8c97a;--text-muted:#8a9ab5;--border:#1e3156}
+body.light{--navy:#f7f4ec;--navy2:#ffffff;--navy3:#f0eadc;--text-muted:#627086;--border:#d9cfae;color:#0a1628}
+body.light header,body.light .section-title,body.light .logo-text .company,body.light .goal-title{color:#0a1628}
+body.light input[type=text],body.light input[type=email],body.light input[type=tel],body.light input[type=number],body.light textarea,body.light select{color:#0a1628}
+.theme-btn{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif}
+body{background:var(--navy);color:#fff;font-family:'DM Sans',sans-serif;min-height:100vh}
+.lang-bar{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:8px 2rem}
+.lang-btns{display:flex;gap:4px}
+.lang-btn{background:transparent;border:1px solid transparent;color:var(--text-muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{border-color:var(--gold);color:var(--gold)}
+nav{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:0;flex-wrap:wrap}
+.nav-btn{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-muted);padding:13px 20px;cursor:pointer;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;transition:all .2s}
+.nav-btn:hover{color:#fff}
+.nav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+header{text-align:center;padding:3rem 2rem 2rem;border-bottom:1px solid var(--border)}
+.logo-mark{display:inline-flex;align-items:center;gap:14px;margin-bottom:1rem}
+.logo-ta{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:600;color:var(--gold);line-height:1;letter-spacing:2px}
+.logo-divider{width:1px;height:48px;background:var(--border)}
+.logo-text .company{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#fff;letter-spacing:1px}
+.logo-text .sub{font-size:11px;color:var(--text-muted);letter-spacing:3px;text-transform:uppercase;margin-top:2px}
+.tagline{font-size:12px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase}
+.gold-line{width:50px;height:2px;background:var(--gold);margin:1.2rem auto 0}
+.page{display:none;max-width:700px;margin:0 auto;padding:2.5rem 2rem 4rem}
+.page.active{display:block}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:.4rem;text-align:center}
+.section-sub{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:2rem;line-height:1.7}
+.form-group{margin-bottom:1.4rem}
+label.field-label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:.45rem;font-weight:500}
+input[type=text],input[type=email],input[type=tel],input[type=number],textarea,select{width:100%;background:var(--navy2);border:1px solid var(--border);color:#fff;padding:11px 15px;font-size:14px;font-family:'DM Sans',sans-serif;border-radius:6px;outline:none;transition:border-color .2s}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+input::placeholder,textarea::placeholder{color:var(--text-muted)}
+textarea{resize:vertical;min-height:100px;line-height:1.6}
+select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center}
+select option{background:var(--navy2)}
+.goal-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
+.goal-card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;cursor:pointer;transition:all .2s;position:relative}
+.goal-card:hover{border-color:var(--gold)}
+.goal-card.selected{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.goal-icon{font-size:20px;margin-bottom:5px}
+.goal-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:2px}
+.goal-desc{font-size:11px;color:var(--text-muted);line-height:1.5}
+.goal-check{position:absolute;top:10px;right:11px;width:17px;height:17px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--navy)}
+.goal-card.selected .goal-check{background:var(--gold);border-color:var(--gold)}
+.sub-panel{background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:4px;display:none}
+.sub-panel.visible{display:block}
+.sub-panel-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:500}
+.check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.check-item{display:flex;align-items:center;gap:8px;cursor:pointer}
+.check-item input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
+.check-item span{font-size:13px;color:#dde4ef}
+.upload-area{border:1px dashed var(--border);border-radius:6px;padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--navy2);position:relative}
+.upload-area:hover{border-color:var(--gold)}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-label{font-size:13px;color:var(--text-muted)}
+.upload-label span{color:var(--gold);font-weight:500}
+.file-name{font-size:12px;color:var(--gold);margin-top:.3rem;display:none}
+.consent-box{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.consent-box input[type=checkbox]{accent-color:var(--gold);width:16px;height:16px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.consent-text{font-size:12px;color:var(--text-muted);line-height:1.7}
+.consent-text a{color:var(--gold);cursor:pointer;text-decoration:none}
+.submit-btn{width:100%;background:var(--gold);color:var(--navy);border:none;padding:14px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;border-radius:6px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:.8rem;transition:background .2s}
+.submit-btn:hover{background:var(--gold-light)}
+.success-msg{display:none;background:rgba(201,168,76,.1);border:1px solid var(--gold);border-radius:6px;padding:1.5rem;text-align:center;margin-top:1rem}
+.success-msg h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);margin-bottom:.3rem}
+.success-msg p{font-size:13px;color:var(--text-muted)}
+.divider{height:1px;background:var(--border);margin:2rem 0}
+.about-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1rem}
+.about-card h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);margin-bottom:.6rem}
+.about-card p{font-size:14px;color:#cdd6e8;line-height:1.8}
+.contact-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;color:#cdd6e8}
+.contact-row:last-child{border-bottom:none}
+.contact-icon{font-size:18px;width:28px;text-align:center;flex-shrink:0;margin-top:2px}
+.contact-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.legal-section{margin-bottom:2rem}
+.legal-section h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);margin-bottom:.7rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.legal-section p,.legal-section li{font-size:13px;color:#b0becf;line-height:1.9;margin-bottom:.5rem}
+.legal-section ul{padding-left:1.2rem}
+.legal-section li{list-style:disc}
+.company-hero{text-align:center;background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:2rem;margin-bottom:2rem}
+.company-hero h2{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);margin-bottom:.5rem}
+.company-hero p{font-size:13px;color:var(--text-muted);line-height:1.7}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+/* WHO WE SERVE badges */
+.serve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:1rem 0}
+.serve-badge{background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:12px 10px;text-align:center}
+.serve-badge .s-icon{font-size:22px;margin-bottom:4px}
+.serve-badge .s-label{font-size:12px;color:#cdd6e8;line-height:1.4}
+
+.admin-top{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.admin-pill{border:1px solid var(--border);background:var(--navy2);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--text-muted)}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.st-looking{background:#22c55e}.st-found{background:#ef4444}.st-pending{background:#f59e0b}.st-archived{background:#6b7280}
+.candidate-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.candidate-card h4{font-size:16px;color:var(--gold);margin-bottom:4px}
+.candidate-meta{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:8px}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap}.mini-btn{background:var(--navy3);border:1px solid var(--border);color:#dde4ef;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12px}.mini-btn.gold{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+body.light .mini-btn{color:#0a1628}
+@media(max-width:640px){.admin-grid{grid-template-columns:1fr}}
+.hidden{display:none!important}
+.cv-link{color:var(--gold);text-decoration:none;font-weight:500}
+.error-msg{display:none;background:rgba(239,68,68,.12);border:1px solid #ef4444;border-radius:6px;padding:1rem;text-align:center;margin-top:1rem;color:#ef4444;font-size:13px}
+body.light .check-item span, body.light .candidate-meta, body.light .about-card p, body.light .contact-row{color:#26364f}
+
+
+footer{text-align:center;padding:1.2rem;border-top:1px solid var(--border);color:var(--text-muted);font-size:11px;letter-spacing:1px}
+footer span{color:var(--gold)}
+footer a{color:var(--gold);cursor:pointer;text-decoration:none}
+[dir=rtl]{direction:rtl;text-align:right}
+[dir=rtl] .lang-bar,[dir=rtl] .lang-btns{flex-direction:row-reverse}
+[dir=rtl] .goal-check{right:auto;left:11px}
+[dir=rtl] .contact-row{flex-direction:row-reverse}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="theme-btn" id="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang('de')">DE</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+  </div>
+</div>
+
+<header>
+  <div class="logo-mark">
+    <div class="logo-ta">TA</div>
+    <div class="logo-divider"></div>
+    <div class="logo-text">
+      <div class="company">Recruitment Agency</div>
+      <div class="sub">Berlin · Deutschland</div>
+    </div>
+  </div>
+  <p class="tagline" id="tagline">Ihre Karriere. Unsere Mission.</p>
+  <div class="gold-line"></div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="showPage('candidates')" id="nav-candidates">Bewerber</button>
+  <button class="nav-btn" onclick="showPage('companies')" id="nav-companies">Unternehmen</button>
+  <button class="nav-btn" onclick="showPage('about')" id="nav-about">Über uns</button>
+  <button class="nav-btn" onclick="showPage('datenschutz')" id="nav-datenschutz">Datenschutz</button>
+  <button class="nav-btn" onclick="showPage('impressum')" id="nav-impressum">Impressum</button>
+  <button class="nav-btn" onclick="showPage('admin-login')" id="nav-admin-login">Admin</button>
+</nav>
+
+<!-- ===== CANDIDATES ===== -->
+<div class="page active" id="page-candidates">
+  <h2 class="section-title" id="form-title" style="margin-top:.5rem">Jetzt bewerben</h2>
+  <p class="section-sub" id="form-sub">Füllen Sie das Formular aus und laden Sie Ihren Lebenslauf hoch. Wir melden uns bei Ihnen.</p>
+
+  <form id="cand-form" onsubmit="submitForm('cand',event)">
+    <div class="input-row">
+      <div class="form-group">
+        <label class="field-label" id="lbl-name">Vollständiger Name</label>
+        <input type="text" id="name" placeholder="Max Mustermann" required>
+      </div>
+      <div class="form-group">
+        <label class="field-label" id="lbl-phone">Telefonnummer</label>
+        <input type="tel" id="phone" placeholder="+49 30 ..." required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="field-label" id="lbl-email">E-Mail-Adresse</label>
+      <input type="email" id="email" placeholder="ihre@email.de">
+    </div>
+    <div class="form-group">
+      <label class="field-label" id="lbl-language">Language / Sprache</label>
+      <input type="text" id="language" placeholder="English, Arabic, German..." required>
+    </div>
+    <div class="form-group">
+      <label class="field-label" id="lbl-sector">Branche / Bereich</label>
+      <select id="sector" required>
+        <option value="" disabled selected id="sector-ph">Bitte wählen...</option>
+        <option>IT & Technologie</option>
+        <option>Finanzen & Buchhaltung</option>
+        <option>Gesundheitswesen</option>
+        <option>Logistik & Transport</option>
+        <option>Gastronomie & Hotel</option>
+        <option>Bau & Handwerk</option>
+        <option>Verwaltung & Büro</option>
+        <option>Sonstiges</option>
+      </select>
+    </div>
+
+    <!-- WHO ARE YOU -->
+    <div class="form-group">
+      <label class="field-label" id="lbl-who">Ich bin...</label>
+      <div class="goal-cards" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="goal-card" id="card-worker" onclick="selectWho('worker')">
+          <div class="goal-check" id="chk-worker"></div>
+          <div class="goal-icon">👷</div>
+          <div class="goal-title" id="who-worker-title">Arbeitnehmer</div>
+          <div class="goal-desc" id="who-worker-desc">Fachkraft oder Hilfskraft</div>
+        </div>
+        <div class="goal-card" id="card-student" onclick="selectWho('student')">
+          <div class="goal-check" id="chk-student"></div>
+          <div class="goal-icon">🎓</div>
+          <div class="goal-title" id="who-student-title">Student / Schüler</div>
+          <div class="goal-desc" id="who-student-desc">Studentenjob oder Praktikum</div>
+        </div>
+        <div class="goal-card" id="card-any" onclick="selectWho('any')">
+          <div class="goal-check" id="chk-any"></div>
+          <div class="goal-icon">🙋</div>
+          <div class="goal-title" id="who-any-title">Quereinsteiger</div>
+          <div class="goal-desc" id="who-any-desc">Kein bestimmter Bereich</div>
+        </div>
+      </div>
+      <!-- student sub-panel -->
+      <div class="sub-panel" id="panel-student">
+        <div class="sub-panel-title" id="student-panel-lbl">Art des Studentenjobs</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox"><span id="opt-werkstudent">Werkstudent</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-praktikum">Praktikum</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-minijob-s">Minijob (€ 556)</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-weekend">Nur Wochenende</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOAL -->
+    <div class="form-group">
+      <label class="field-label" id="lbl-goal">Was ist Ihr Ziel?</label>
+      <div class="goal-cards">
+        <div class="goal-card" id="card-money" onclick="selectGoal('money')">
+          <div class="goal-check" id="chk-money"></div>
+          <div class="goal-icon">💰</div>
+          <div class="goal-title" id="gm-title">Schnell Geld verdienen</div>
+          <div class="goal-desc" id="gm-desc">Kurzfristige Jobs für sofortigen Verdienst</div>
+        </div>
+        <div class="goal-card" id="card-contract" onclick="selectGoal('contract')">
+          <div class="goal-check" id="chk-contract"></div>
+          <div class="goal-icon">📋</div>
+          <div class="goal-title" id="gc-title">Fester Arbeitsvertrag</div>
+          <div class="goal-desc" id="gc-desc">Langfristige Anstellung mit Sicherheit</div>
+        </div>
+        <div class="goal-card" id="card-freelance" onclick="selectGoal('freelance')">
+          <div class="goal-check" id="chk-freelance"></div>
+          <div class="goal-icon">🔧</div>
+          <div class="goal-title" id="gf-title">Auftragsarbeit / Zeitfirma</div>
+          <div class="goal-desc" id="gf-desc">Flexibel per Auftrag ohne festen Vertrag</div>
+        </div>
+        <div class="goal-card" id="card-open" onclick="selectGoal('open')">
+          <div class="goal-check" id="chk-open"></div>
+          <div class="goal-icon">🔍</div>
+          <div class="goal-title" id="go-title">Offen für alles</div>
+          <div class="goal-desc" id="go-desc">Ich schaue, was am besten passt</div>
+        </div>
+      </div>
+      <div class="sub-panel" id="panel-contract">
+        <div class="sub-panel-title" id="panel-contract-lbl">Art des Vertrags</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox"><span id="opt-vollzeit">Vollzeit</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-teilzeit">Teilzeit</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-minijob">Minijob (€ 556)</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-midi">Midijob</span></label>
+        </div>
+      </div>
+      <div class="sub-panel" id="panel-freelance">
+        <div class="sub-panel-title" id="panel-freelance-lbl">Art der Zusammenarbeit</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox"><span id="opt-zeit">Zeitarbeit / Leiharbeit</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-proj">Projektbasis</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-self">Selbstständig / Freelance</span></label>
+          <label class="check-item"><input type="checkbox"><span id="opt-aus">Aushilfe / Vertretung</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label" id="lbl-desc">Beschreiben Sie Ihre Wünsche</label>
+      <textarea id="description" placeholder="Berufserfahrung, gewünschte Position, Arbeitszeiten, Gehaltsvorstellung..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label" id="lbl-cv">Lebenslauf hochladen</label>
+      <div class="upload-area">
+        <input type="file" id="cv-file" accept=".pdf,.doc,.docx" onchange="handleFile(this,'fname')" required>
+        <div style="font-size:22px;margin-bottom:4px">📄</div>
+        <div class="upload-label"><span id="upload-click">Datei auswählen</span><span id="upload-or"> oder hierher ziehen</span></div>
+        <div class="file-name" id="fname"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="consent-box">
+        <input type="checkbox" id="consent-cand" required>
+        <div class="consent-text" id="consent-cand-txt">Ich habe die <a onclick="showPage('datenschutz')">Datenschutzerklärung</a> gelesen und bin damit einverstanden, dass meine Daten zur Vermittlung gespeichert und verarbeitet werden.</div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submit-btn">BEWERBUNG ABSENDEN</button>
+  </form>
+  <div class="success-msg" id="cand-success">
+    <h3 id="s-title">✓ Bewerbung erhalten!</h3>
+    <p id="s-text">Vielen Dank! Wir melden uns in Kürze bei Ihnen.</p>
+  </div>
+</div>
+
+<!-- ===== COMPANIES ===== -->
+<div class="page" id="page-companies">
+  <div class="company-hero">
+    <h2 id="co-hero-title">Mitarbeiter finden leicht gemacht</h2>
+    <p id="co-hero-sub">Teilen Sie uns Ihren Bedarf mit — wir finden die passenden Kandidaten für Ihr Unternehmen in Berlin und Umgebung.</p>
+  </div>
+  <form id="co-form" onsubmit="submitForm('co',event)">
+    <div class="input-row">
+      <div class="form-group">
+        <label class="field-label" id="lbl-co-name">Firmenname</label>
+        <input type="text" id="co-name" placeholder="Muster GmbH" required>
+      </div>
+      <div class="form-group">
+        <label class="field-label" id="lbl-co-contact">Ansprechpartner</label>
+        <input type="text" id="co-contact" placeholder="Max Mustermann" required>
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="form-group">
+        <label class="field-label" id="lbl-co-email">E-Mail</label>
+        <input type="email" id="co-email" placeholder="kontakt@firma.de" required>
+      </div>
+      <div class="form-group">
+        <label class="field-label" id="lbl-co-phone">Telefon</label>
+        <input type="tel" id="co-phone" placeholder="+49 30 ...">
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="form-group">
+        <label class="field-label" id="lbl-co-sector">Branche</label>
+        <select id="co-sector" required>
+          <option value="" disabled selected id="co-sector-ph">Bitte wählen...</option>
+          <option>IT & Technologie</option>
+          <option>Finanzen & Buchhaltung</option>
+          <option>Gesundheitswesen</option>
+          <option>Logistik & Transport</option>
+          <option>Gastronomie & Hotel</option>
+          <option>Bau & Handwerk</option>
+          <option>Verwaltung & Büro</option>
+          <option>Sonstiges</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="field-label" id="lbl-co-count">Anzahl Mitarbeiter gesucht</label>
+        <input type="number" id="co-count" min="1" placeholder="z.B. 5" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="field-label" id="lbl-co-type">Art der Anstellung</label>
+      <div class="check-grid" style="background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <label class="check-item"><input type="checkbox"><span id="co-vollzeit">Vollzeit</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-teilzeit">Teilzeit</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-minijob">Minijob</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-zeit">Zeitarbeit</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-proj">Projektbasis</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-student-job">Studentenjobs</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-praktikum">Praktikum</span></label>
+        <label class="check-item"><input type="checkbox"><span id="co-aus">Aushilfe</span></label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="field-label" id="lbl-co-skills">Gewünschte Qualifikationen / Anforderungen</label>
+      <textarea id="co-skills" placeholder="Beschreiben Sie die Stelle, benötigte Erfahrung, Sprachen, Schichtarbeit etc."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="field-label" id="lbl-co-start">Gewünschter Starttermin</label>
+      <input type="text" id="co-start" placeholder="z.B. sofort, ab 01.08.2025">
+    </div>
+    <div class="form-group">
+      <div class="consent-box">
+        <input type="checkbox" id="consent-co" required>
+        <div class="consent-text" id="consent-co-txt">Ich habe die <a onclick="showPage('datenschutz')">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Unternehmensdaten zur Personalvermittlung zu.</div>
+      </div>
+    </div>
+    <button type="submit" class="submit-btn" id="co-submit-btn">ANFRAGE ABSENDEN</button>
+  </form>
+  <div class="success-msg" id="co-success">
+    <h3 id="co-s-title">✓ Anfrage erhalten!</h3>
+    <p id="co-s-text">Vielen Dank! Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+  </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<div class="page" id="page-about">
+  <h2 class="section-title" id="about-title">Über uns</h2>
+  <p class="section-sub" id="about-sub">Wer wir sind und was uns antreibt</p>
+
+  <div class="about-card">
+    <h3 id="about-h1">Unsere Mission</h3>
+    <p id="about-p1">TA Recruitment Agency verbindet qualifizierte Fachkräfte mit den richtigen Arbeitgebern in Berlin. Wir glauben, dass jeder Mensch einen fairen Zugang zum Arbeitsmarkt verdient — egal ob Fachkraft, Quereinsteiger oder Student.</p>
+  </div>
+
+  <!-- WHO WE SERVE -->
+  <div class="about-card">
+    <h3 id="about-h-serve">Für jeden den richtigen Job</h3>
+    <p id="about-p-serve" style="margin-bottom:1rem">Wir helfen Menschen aus allen Lebensbereichen — von der erfahrenen Fachkraft bis zum Studenten, der nebenbei Geld verdienen möchte.</p>
+    <div class="serve-grid">
+      <div class="serve-badge">
+        <div class="s-icon">👷</div>
+        <div class="s-label" id="serve-worker">Fachkräfte &amp; Hilfskräfte</div>
+      </div>
+      <div class="serve-badge">
+        <div class="s-icon">🎓</div>
+        <div class="s-label" id="serve-student">Studenten &amp; Schüler</div>
+      </div>
+      <div class="serve-badge">
+        <div class="s-icon">🙋</div>
+        <div class="s-label" id="serve-career">Quereinsteiger</div>
+      </div>
+      <div class="serve-badge">
+        <div class="s-icon">🏗️</div>
+        <div class="s-label" id="serve-hand">Handwerker &amp; Bau</div>
+      </div>
+      <div class="serve-badge">
+        <div class="s-icon">🍽️</div>
+        <div class="s-label" id="serve-gastro">Gastronomie</div>
+      </div>
+      <div class="serve-badge">
+        <div class="s-icon">🚚</div>
+        <div class="s-label" id="serve-log">Logistik &amp; Lager</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-card">
+    <h3 id="about-h2">Unsere Stärken</h3>
+    <p id="about-p2">Wir sind spezialisiert auf die Vermittlung von Fach- und Hilfskräften in vielen Branchen. Dank unseres weitreichenden Netzwerks in Berlin vermitteln wir schnell, diskret und professionell — sowohl für Bewerber als auch für Unternehmen.</p>
+  </div>
+
+  <div class="about-card">
+    <h3 id="about-h3">Mehrsprachig &amp; persönlich</h3>
+    <p id="about-p3">Unser Team spricht Deutsch, Englisch und Arabisch. Wir begleiten Sie persönlich durch den gesamten Bewerbungsprozess und stehen Ihnen mit Rat und Tat zur Seite.</p>
+  </div>
+
+  <div class="divider"></div>
+  <h2 class="section-title" id="kontakt-title">Kontakt</h2>
+  <p class="section-sub" id="kontakt-sub">Wir freuen uns auf Ihre Nachricht</p>
+  <div class="about-card">
+    <div class="contact-row">
+      <div class="contact-icon">📍</div>
+      <div><div class="contact-label" id="c-addr-lbl">Adresse</div><div id="c-addr">[Adresse wird ergänzt] · Berlin, Deutschland</div></div>
+    </div>
+    <div class="contact-row">
+      <div class="contact-icon">📞</div>
+      <div><div class="contact-label" id="c-phone-lbl">Telefon</div><div id="c-phone">[Telefonnummer wird ergänzt]</div></div>
+    </div>
+    <div class="contact-row">
+      <div class="contact-icon">✉️</div>
+      <div><div class="contact-label" id="c-email-lbl">E-Mail</div><div id="c-email">[E-Mail wird ergänzt]</div></div>
+    </div>
+    <div class="contact-row">
+      <div class="contact-icon">🕐</div>
+      <div><div class="contact-label" id="c-hours-lbl">Öffnungszeiten</div><div id="c-hours">Mo – Fr: 09:00 – 18:00 Uhr</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ===== ADMIN LOGIN ===== -->
+<div class="page" id="page-admin-login">
+  <h2 class="section-title">Admin Login</h2>
+  <p class="section-sub">For authorised recruitment team members only.</p>
+  <form id="admin-login-form" onsubmit="adminLogin(event)">
+    <div class="form-group">
+      <label class="field-label">Admin Email</label>
+      <input type="email" id="admin-email" placeholder="admin@ta-recruitment.de" required>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Password</label>
+      <input type="password" id="admin-password" placeholder="Password" required style="width:100%;background:var(--navy2);border:1px solid var(--border);color:#fff;padding:11px 15px;font-size:14px;font-family:'DM Sans',sans-serif;border-radius:6px;outline:none">
+    </div>
+    <button type="submit" class="submit-btn">LOGIN</button>
+  </form>
+  <div class="success-msg" id="admin-login-msg"><h3>Login ready</h3><p>Connect this form to Supabase Auth using the steps below.</p></div>
+</div>
+
+<!-- ===== ADMIN DASHBOARD ===== -->
+<div class="page" id="page-admin-dashboard">
+  <div class="admin-top">
+    <div>
+      <h2 class="section-title" style="text-align:left;margin-bottom:.2rem">TA Recruitment Dashboard</h2>
+      <p class="section-sub" style="text-align:left;margin-bottom:0">Candidate Management System / Recruitment CRM</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div class="admin-pill">Role: <strong id="admin-role">Admin</strong></div><button class="mini-btn" onclick="adminLogout()">Logout</button></div>
+  </div>
+
+  <div class="admin-grid">
+    <div class="about-card">
+      <h3>Add / Edit Candidate</h3>
+      <form id="admin-candidate-form" onsubmit="saveCandidate(event)">
+        <input type="hidden" id="edit-index">
+        <div class="form-group"><label class="field-label">Full Name *</label><input type="text" id="ad-name" required></div>
+        <div class="form-group"><label class="field-label">Phone *</label><input type="tel" id="ad-phone" required></div>
+        <div class="form-group"><label class="field-label">Language *</label><input type="text" id="ad-language" required></div>
+        <div class="form-group"><label class="field-label">Email</label><input type="email" id="ad-email"></div>
+        <div class="form-group"><label class="field-label">Status</label><select id="ad-status"><option value="looking">Looking for job</option><option value="found">Found job</option><option value="pending">Missing info / follow-up</option><option value="archived">Archived</option></select></div>
+        <div class="form-group"><label class="field-label">CV *</label><input type="file" id="ad-cv" accept=".pdf,.doc,.docx" required></div>
+        <div class="form-group"><label class="field-label">Notes</label><textarea id="ad-notes" placeholder="Follow-up notes, job preferences, availability..."></textarea></div>
+        <button class="submit-btn" type="submit">SAVE CANDIDATE</button>
+      </form>
+    </div>
+
+    <div class="about-card">
+      <h3>Candidate List</h3>
+      <div class="form-group"><input type="text" id="candidate-search" placeholder="Search name, phone, language..." oninput="renderCandidates()"></div>
+      <div class="form-group"><select id="candidate-filter" onchange="renderCandidates()"><option value="all">All statuses</option><option value="looking">Looking - green</option><option value="found">Found job - red</option><option value="pending">Pending - yellow</option><option value="archived">Archived - grey</option></select></div>
+      <div id="candidate-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DATENSCHUTZ ===== -->
+<div class="page" id="page-datenschutz">
+  <h2 class="section-title">Datenschutzerklärung</h2>
+  <p class="section-sub" id="ds-sub">Gemäß DSGVO (EU) 2016/679</p>
+  <div class="legal-section"><h3 id="ds-h1">1. Verantwortlicher</h3><p id="ds-p1">TA Recruitment Agency<br>[Adresse wird ergänzt] · Berlin<br>E-Mail: [wird ergänzt]</p></div>
+  <div class="legal-section"><h3 id="ds-h2">2. Welche Daten wir erheben</h3><p id="ds-p2">Wenn Sie unser Formular ausfüllen, erheben wir:</p><ul><li id="ds-l1">Name und Kontaktdaten (E-Mail, Telefon)</li><li id="ds-l2">Berufliche Informationen (Lebenslauf, Qualifikationen)</li><li id="ds-l3">Angaben zu Arbeitspräferenzen (Branche, Vertragsart)</li></ul></div>
+  <div class="legal-section"><h3 id="ds-h3">3. Zweck der Datenverarbeitung</h3><p id="ds-p3">Ihre Daten werden ausschließlich zur Personalvermittlung verwendet. Wir leiten Ihre Unterlagen nur mit Ihrer Zustimmung an geeignete Unternehmen weiter.</p></div>
+  <div class="legal-section"><h3 id="ds-h4">4. Rechtsgrundlage</h3><p id="ds-p4">Die Verarbeitung erfolgt auf Basis von Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) sowie Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).</p></div>
+  <div class="legal-section"><h3 id="ds-h5">5. Speicherdauer</h3><p id="ds-p5">Ihre Daten werden maximal 2 Jahre nach letztem Kontakt gespeichert. Sie können jederzeit die Löschung beantragen.</p></div>
+  <div class="legal-section"><h3 id="ds-h6">6. Ihre Rechte</h3><p>Sie haben das Recht auf:</p><ul><li>Auskunft (Art. 15 DSGVO)</li><li>Berichtigung (Art. 16 DSGVO)</li><li>Löschung (Art. 17 DSGVO)</li><li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li><li>Widerspruch (Art. 21 DSGVO)</li><li>Beschwerde bei der Berliner Beauftragten für Datenschutz</li></ul></div>
+  <div class="legal-section"><h3 id="ds-h7">7. Cookies &amp; Tracking</h3><p id="ds-p7">Diese Website verwendet keine Tracking-Cookies und keine Analyse-Tools von Drittanbietern.</p></div>
+</div>
+
+<!-- ===== IMPRESSUM ===== -->
+<div class="page" id="page-impressum">
+  <h2 class="section-title">Impressum</h2>
+  <p class="section-sub">Angaben gemäß § 5 TMG</p>
+  <div class="about-card">
+    <div class="legal-section" style="margin-bottom:1rem"><h3>Angaben zum Unternehmen</h3><p>TA Recruitment Agency<br>[Straße und Hausnummer wird ergänzt]<br>[PLZ] Berlin, Deutschland</p></div>
+    <div class="legal-section" style="margin-bottom:1rem"><h3>Kontakt</h3><p>Telefon: [wird ergänzt]<br>E-Mail: [wird ergänzt]</p></div>
+    <div class="legal-section" style="margin-bottom:1rem"><h3>Verantwortlich für den Inhalt</h3><p>[Name wird ergänzt] · TA Recruitment Agency · Berlin</p></div>
+    <div class="legal-section" style="margin-bottom:0"><h3>Haftungsausschluss</h3><p>Trotz sorgfältiger Kontrolle übernehmen wir keine Haftung für externe Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p></div>
+  </div>
+</div>
+
+<footer>© 2025 <span>TA Recruitment Agency</span> · Berlin · <a onclick="showPage('datenschutz')">Datenschutz</a> · <a onclick="showPage('impressum')">Impressum</a></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://gfbrxlrnytlebrsyylnc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_SLlFNsrTJyKVJpHnuPbq0w_MyXL9XlF";
+const supabaseClient = (window.supabase && !SUPABASE_KEY.includes('PASTE_YOUR'))
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+  : null;
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  const nb=document.getElementById('nav-'+p);
+  if(nb) nb.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function selectWho(g){
+  ['worker','student','any'].forEach(id=>{
+    document.getElementById('card-'+id).classList.toggle('selected',id===g);
+    document.getElementById('chk-'+id).textContent=id===g?'✓':'';
+  });
+  document.getElementById('panel-student').classList.toggle('visible',g==='student');
+}
+
+function selectGoal(g){
+  ['money','contract','freelance','open'].forEach(id=>{
+    document.getElementById('card-'+id).classList.toggle('selected',id===g);
+    document.getElementById('chk-'+id).textContent=id===g?'✓':'';
+  });
+  document.getElementById('panel-contract').classList.toggle('visible',g==='contract');
+  document.getElementById('panel-freelance').classList.toggle('visible',g==='freelance');
+}
+
+function handleFile(input,tid){
+  const fn=document.getElementById(tid);
+  if(input.files.length>0){fn.textContent='📎 '+input.files[0].name;fn.style.display='block'}
+}
+
+async function submitForm(type,e){
+  e.preventDefault();
+
+  if(type==='co'){
+    document.getElementById('co-form').style.display='none';
+    document.getElementById('co-success').style.display='block';
+    return;
+  }
+
+  if(!supabaseClient){
+    alert('Supabase is not connected. Check SUPABASE_URL and SUPABASE_KEY.');
+    return;
+  }
+
+  const cvInput=document.getElementById('cv-file');
+  const cv=cvInput.files[0];
+  if(!cv){ alert('CV is required.'); return; }
+
+  const btn=document.getElementById('submit-btn');
+  const oldText=btn.textContent;
+  btn.disabled=true; btn.textContent='SENDING...';
+
+  try{
+    const safeName=(document.getElementById('name').value||'candidate').replace(/[^a-z0-9_-]+/gi,'_');
+    const path=`public/${Date.now()}_${safeName}_${cv.name}`;
+    const upload=await supabaseClient.storage.from('candidate-cvs').upload(path,cv,{upsert:false});
+    if(upload.error) throw upload.error;
+
+    const payload={
+      full_name:document.getElementById('name').value,
+      phone:document.getElementById('phone').value,
+      email:document.getElementById('email').value || null,
+      language:document.getElementById('language').value,
+      status:'looking',
+      notes:document.getElementById('description').value || null,
+      cv_url:path
+    };
+    const ins=await supabaseClient.from('candidates').insert(payload);
+    if(ins.error) throw ins.error;
+
+    document.getElementById('cand-form').style.display='none';
+    document.getElementById('cand-success').style.display='block';
+  }catch(err){
+    alert('Submission failed: '+err.message+'\n\nIf this is the public form, run the public INSERT policies I gave you in Supabase.');
+  }finally{
+    btn.disabled=false; btn.textContent=oldText;
+  }
+}
+
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  const isLight=document.body.classList.contains('light');
+  localStorage.setItem('ta-theme',isLight?'light':'dark');
+  const btn=document.getElementById('theme-toggle'); if(btn) btn.textContent=isLight?'☾ Dark':'☀ Light';
+}
+(function initTheme(){
+  if(localStorage.getItem('ta-theme')==='light') document.body.classList.add('light');
+  setTimeout(()=>{const btn=document.getElementById('theme-toggle'); if(btn) btn.textContent=document.body.classList.contains('light')?'☾ Dark':'☀ Light';},0);
+})();
+
+async function adminLogin(e){
+  e.preventDefault();
+  const email=document.getElementById('admin-email').value;
+  const password=document.getElementById('admin-password').value;
+
+  if(!supabaseClient){
+    alert('Supabase is not connected. Check SUPABASE_URL and SUPABASE_KEY.');
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if(error){
+    alert('Login failed: '+error.message);
+    return;
+  }
+
+  document.getElementById('admin-login-form').style.display='none';
+  document.getElementById('admin-login-msg').style.display='block';
+  showPage('admin-dashboard');
+  await loadCandidates();
+}
+
+async function adminLogout(){
+  if(supabaseClient) await supabaseClient.auth.signOut();
+  document.getElementById('admin-login-form').style.display='block';
+  document.getElementById('admin-login-msg').style.display='none';
+  showPage('admin-login');
+}
+
+let candidates=[];
+
+async function uploadCv(file, prefix='admin'){
+  if(!file) return null;
+  const safe=file.name.replace(/[^a-z0-9_.-]+/gi,'_');
+  const path=`${prefix}/${Date.now()}_${safe}`;
+  const { error } = await supabaseClient.storage.from('candidate-cvs').upload(path,file,{upsert:false});
+  if(error) throw error;
+  return path;
+}
+
+async function saveCandidate(e){
+  e.preventDefault();
+  if(!supabaseClient){ alert('Supabase is not connected.'); return; }
+
+  const editId=document.getElementById('edit-index').value;
+  const cvFile=document.getElementById('ad-cv').files[0];
+  const current=candidates.find(c=>c.id===editId);
+
+  if(!editId && !cvFile){ alert('CV is required for new candidates.'); return; }
+
+  const btn=e.target.querySelector('button[type="submit"]');
+  const oldText=btn.textContent;
+  btn.disabled=true; btn.textContent='SAVING...';
+
+  try{
+    let cvPath=current?.cv_url || null;
+    if(cvFile) cvPath=await uploadCv(cvFile,'admin');
+
+    const payload={
+      full_name:document.getElementById('ad-name').value,
+      phone:document.getElementById('ad-phone').value,
+      language:document.getElementById('ad-language').value,
+      email:document.getElementById('ad-email').value || null,
+      status:document.getElementById('ad-status').value,
+      notes:document.getElementById('ad-notes').value || null,
+      cv_url:cvPath
+    };
+
+    let res;
+    if(editId){
+      res=await supabaseClient.from('candidates').update(payload).eq('id',editId);
+    }else{
+      res=await supabaseClient.from('candidates').insert(payload);
+    }
+    if(res.error) throw res.error;
+
+    e.target.reset();
+    document.getElementById('edit-index').value='';
+    document.getElementById('ad-cv').required=true;
+    await loadCandidates();
+  }catch(err){
+    alert('Save failed: '+err.message);
+  }finally{
+    btn.disabled=false; btn.textContent=oldText;
+  }
+}
+
+function statusLabel(s){return s==='looking'?'Looking for job':s==='found'?'Found job':s==='pending'?'Missing info / follow-up':'Archived'}
+
+async function getCvLink(path){
+  if(!path || !supabaseClient) return '#';
+  const { data, error }=await supabaseClient.storage.from('candidate-cvs').createSignedUrl(path,60*10);
+  if(error) return '#';
+  return data.signedUrl;
+}
+
+async function loadCandidates(){
+  if(!supabaseClient) return;
+  const { data, error } = await supabaseClient.from('candidates').select('*').order('created_at',{ascending:false});
+  if(error){ alert('Could not load candidates: '+error.message); return; }
+  candidates=data||[];
+  renderCandidates();
+}
+
+async function renderCandidates(){
+  const q=(document.getElementById('candidate-search')?.value||'').toLowerCase();
+  const f=document.getElementById('candidate-filter')?.value||'all';
+  const list=document.getElementById('candidate-list'); if(!list) return;
+  list.innerHTML='';
+  const filtered=candidates.filter(c=>{
+    if(f!=='all' && c.status!==f) return false;
+    const blob=[c.full_name,c.phone,c.language,c.email,c.notes].join(' ').toLowerCase();
+    return !q || blob.includes(q);
+  });
+  if(filtered.length===0){ list.innerHTML='<p class="section-sub" style="text-align:left">No candidates found.</p>'; return; }
+  for(const c of filtered){
+    const cvLink=await getCvLink(c.cv_url);
+    const div=document.createElement('div'); div.className='candidate-card';
+    const cvName=c.cv_url ? c.cv_url.split('/').pop() : '-';
+    div.innerHTML=`<h4><span class="status-dot st-${c.status||'looking'}"></span>${escapeHtml(c.full_name||'-')}</h4><div class="candidate-meta">Phone: ${escapeHtml(c.phone||'-')}<br>Language: ${escapeHtml(c.language||'-')}<br>Email: ${escapeHtml(c.email||'-')}<br>CV: ${c.cv_url?`<a class="cv-link" href="${cvLink}" target="_blank" rel="noopener">${escapeHtml(cvName)}</a>`:'-'}<br>Status: ${statusLabel(c.status||'looking')}<br>Created: ${(c.created_at||'').slice(0,10)||'-'}<br>Notes: ${escapeHtml(c.notes||'-')}</div><div class="card-actions"><button class="mini-btn gold" onclick="editCandidate('${c.id}')">Edit</button><button class="mini-btn" onclick="deleteCandidate('${c.id}')">Delete</button></div>`;
+    list.appendChild(div);
+  }
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>'"]/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s]));
+}
+
+function editCandidate(id){
+  const c=candidates.find(x=>x.id===id); if(!c) return;
+  showPage('admin-dashboard');
+  document.getElementById('edit-index').value=c.id;
+  document.getElementById('ad-name').value=c.full_name||'';
+  document.getElementById('ad-phone').value=c.phone||'';
+  document.getElementById('ad-language').value=c.language||'';
+  document.getElementById('ad-email').value=c.email||'';
+  document.getElementById('ad-status').value=c.status||'looking';
+  document.getElementById('ad-notes').value=c.notes||'';
+  document.getElementById('ad-cv').required=false;
+}
+
+async function deleteCandidate(id){
+  if(!confirm('Delete this candidate?')) return;
+  const { error }=await supabaseClient.from('candidates').delete().eq('id',id);
+  if(error){ alert('Delete failed: '+error.message); return; }
+  await loadCandidates();
+}
+
+setTimeout(async()=>{
+  if(!supabaseClient) return;
+  const { data }=await supabaseClient.auth.getSession();
+  if(data?.session){ await loadCandidates(); }
+},0);
+
+const T={
+  de:{
+    tagline:"Ihre Karriere. Unsere Mission.",dir:"ltr",
+    navCand:"Bewerber",navCo:"Unternehmen",navAbout:"Über uns",navDs:"Datenschutz",navImp:"Impressum",
+    formTitle:"Jetzt bewerben",formSub:"Füllen Sie das Formular aus und laden Sie Ihren Lebenslauf hoch. Wir melden uns bei Ihnen.",
+    lblName:"Vollständiger Name",lblPhone:"Telefonnummer",lblEmail:"E-Mail-Adresse",lblLanguage:"Sprache",lblSector:"Branche / Bereich",secPH:"Bitte wählen...",
+    lblWho:"Ich bin...",
+    whoWorkerT:"Arbeitnehmer",whoWorkerD:"Fachkraft oder Hilfskraft",
+    whoStudentT:"Student / Schüler",whoStudentD:"Studentenjob oder Praktikum",
+    whoAnyT:"Quereinsteiger",whoAnyD:"Kein bestimmter Bereich",
+    studentPanelLbl:"Art des Studentenjobs",
+    optWerkstudent:"Werkstudent",optPraktikum:"Praktikum",optMinijobS:"Minijob (€ 556)",optWeekend:"Nur Wochenende",
+    lblGoal:"Was ist Ihr Ziel?",
+    gmT:"Schnell Geld verdienen",gmD:"Kurzfristige Jobs für sofortigen Verdienst",
+    gcT:"Fester Arbeitsvertrag",gcD:"Langfristige Anstellung mit Sicherheit",
+    gfT:"Auftragsarbeit / Zeitfirma",gfD:"Flexibel per Auftrag ohne festen Vertrag",
+    goT:"Offen für alles",goD:"Ich schaue, was am besten passt",
+    pContLbl:"Art des Vertrags",optVoll:"Vollzeit",optTeil:"Teilzeit",optMini:"Minijob (€ 556)",optMidi:"Midijob",
+    pFreeLbl:"Art der Zusammenarbeit",optZeit:"Zeitarbeit / Leiharbeit",optProj:"Projektbasis",optSelf:"Selbstständig / Freelance",optAus:"Aushilfe / Vertretung",
+    lblDesc:"Beschreiben Sie Ihre Wünsche",descPH:"Berufserfahrung, gewünschte Position, Arbeitszeiten...",
+    lblCv:"Lebenslauf hochladen",upClick:"Datei auswählen",upOr:" oder hierher ziehen",
+    consCand:"Ich habe die [DS] gelesen und bin damit einverstanden, dass meine Daten zur Vermittlung gespeichert und verarbeitet werden.",
+    submitCand:"BEWERBUNG ABSENDEN",sCandT:"✓ Bewerbung erhalten!",sCandP:"Vielen Dank! Wir melden uns in Kürze bei Ihnen.",
+    coHeroT:"Mitarbeiter finden leicht gemacht",coHeroS:"Teilen Sie uns Ihren Bedarf mit — wir finden die passenden Kandidaten für Ihr Unternehmen.",
+    lblCoName:"Firmenname",lblCoContact:"Ansprechpartner",lblCoEmail:"E-Mail",lblCoPhone:"Telefon",
+    lblCoSector:"Branche",coSecPH:"Bitte wählen...",lblCoCount:"Anzahl Mitarbeiter gesucht",
+    lblCoType:"Art der Anstellung",
+    coVoll:"Vollzeit",coTeil:"Teilzeit",coMini:"Minijob",coZeit:"Zeitarbeit",coProj:"Projektbasis",coStudentJob:"Studentenjobs",coPrak:"Praktikum",coAus:"Aushilfe",
+    lblCoSkills:"Gewünschte Qualifikationen / Anforderungen",coSkillsPH:"Stelle, Erfahrung, Sprachen, Schichtarbeit...",
+    lblCoStart:"Gewünschter Starttermin",coStartPH:"z.B. sofort, ab 01.08.2025",
+    consCo:"Ich habe die [DS] gelesen und stimme der Verarbeitung meiner Unternehmensdaten zu.",
+    submitCo:"ANFRAGE ABSENDEN",sCoT:"✓ Anfrage erhalten!",sCoP:"Vielen Dank! Wir melden uns innerhalb von 24 Stunden bei Ihnen.",
+    aboutT:"Über uns",aboutS:"Wer wir sind und was uns antreibt",
+    aboutH1:"Unsere Mission",aboutP1:"TA Recruitment Agency verbindet qualifizierte Fachkräfte mit den richtigen Arbeitgebern in Berlin. Wir glauben, dass jeder Mensch einen fairen Zugang zum Arbeitsmarkt verdient — egal ob Fachkraft, Quereinsteiger oder Student.",
+    aboutHServe:"Für jeden den richtigen Job",aboutPServe:"Wir helfen Menschen aus allen Lebensbereichen — von der erfahrenen Fachkraft bis zum Studenten, der nebenbei Geld verdienen möchte.",
+    serveWorker:"Fachkräfte & Hilfskräfte",serveStudent:"Studenten & Schüler",serveCareer:"Quereinsteiger",serveHand:"Handwerker & Bau",serveGastro:"Gastronomie",serveLog:"Logistik & Lager",
+    aboutH2:"Unsere Stärken",aboutP2:"Spezialisiert auf Fach- und Hilfskräfte in vielen Branchen. Dank unseres Netzwerks in Berlin vermitteln wir schnell, diskret und professionell.",
+    aboutH3:"Mehrsprachig & persönlich",aboutP3:"Unser Team spricht Deutsch, Englisch und Arabisch. Wir begleiten Sie persönlich durch den gesamten Bewerbungsprozess.",
+    kontaktT:"Kontakt",kontaktS:"Wir freuen uns auf Ihre Nachricht",
+    addrLbl:"Adresse",phoneLbl:"Telefon",emailLbl:"E-Mail",hoursLbl:"Öffnungszeiten",
+    addr:"[Adresse wird ergänzt] · Berlin",phVal:"[Telefonnummer wird ergänzt]",emVal:"[E-Mail wird ergänzt]",hrVal:"Mo – Fr: 09:00 – 18:00 Uhr",
+    dsLinkWord:"Datenschutzerklärung"
+  },
+  en:{
+    tagline:"Your Career. Our Mission.",dir:"ltr",
+    navCand:"Candidates",navCo:"Companies",navAbout:"About",navDs:"Privacy",navImp:"Imprint",
+    formTitle:"Apply Now",formSub:"Fill in the form and upload your CV. We will get back to you shortly.",
+    lblName:"Full Name",lblPhone:"Phone Number",lblEmail:"Email Address",lblLanguage:"Language",lblSector:"Industry / Field",secPH:"Please select...",
+    lblWho:"I am...",
+    whoWorkerT:"Employee",whoWorkerD:"Skilled or unskilled worker",
+    whoStudentT:"Student / Pupil",whoStudentD:"Student job or internship",
+    whoAnyT:"Career changer",whoAnyD:"No specific field",
+    studentPanelLbl:"Type of student job",
+    optWerkstudent:"Working student",optPraktikum:"Internship",optMinijobS:"Mini-job (€ 556)",optWeekend:"Weekends only",
+    lblGoal:"What is your goal?",
+    gmT:"Earn money quickly",gmD:"Short-term jobs for immediate income",
+    gcT:"Long-term employment",gcD:"Permanent contract with job security",
+    gfT:"Freelance / Temp work",gfD:"Flexible project-based work",
+    goT:"Open to everything",goD:"I'll see what fits best",
+    pContLbl:"Contract type",optVoll:"Full-time",optTeil:"Part-time",optMini:"Mini-job (€ 556)",optMidi:"Midi-job",
+    pFreeLbl:"Type of collaboration",optZeit:"Temp / Agency work",optProj:"Project basis",optSelf:"Freelance / Self-employed",optAus:"Casual / Cover",
+    lblDesc:"Describe your wishes",descPH:"Experience, desired role, working hours, salary expectations...",
+    lblCv:"Upload CV / Resume",upClick:"Choose file",upOr:" or drag it here",
+    consCand:"I have read the [DS] and agree that my data may be stored and processed for recruitment purposes.",
+    submitCand:"SUBMIT APPLICATION",sCandT:"✓ Application received!",sCandP:"Thank you! We will contact you soon.",
+    coHeroT:"Finding staff made easy",coHeroS:"Tell us what you need — we find the right candidates for your company.",
+    lblCoName:"Company Name",lblCoContact:"Contact Person",lblCoEmail:"Email",lblCoPhone:"Phone",
+    lblCoSector:"Industry",coSecPH:"Please select...",lblCoCount:"Number of staff needed",
+    lblCoType:"Employment type",
+    coVoll:"Full-time",coTeil:"Part-time",coMini:"Mini-job",coZeit:"Temp work",coProj:"Project basis",coStudentJob:"Student jobs",coPrak:"Internship",coAus:"Casual",
+    lblCoSkills:"Required qualifications / requirements",coSkillsPH:"Role, experience, languages, shift work...",
+    lblCoStart:"Desired start date",coStartPH:"e.g. immediately, from 01.08.2025",
+    consCo:"I have read the [DS] and agree to the processing of my company data for recruitment purposes.",
+    submitCo:"SUBMIT REQUEST",sCoT:"✓ Request received!",sCoP:"Thank you! We will get back to you within 24 hours.",
+    aboutT:"About Us",aboutS:"Who we are and what drives us",
+    aboutH1:"Our Mission",aboutP1:"TA Recruitment Agency connects qualified professionals with the right employers in Berlin. We believe everyone deserves fair access to the job market — whether skilled worker, career changer, or student.",
+    aboutHServe:"The right job for everyone",aboutPServe:"We help people from all walks of life — from experienced professionals to students looking for a side job.",
+    serveWorker:"Skilled & unskilled workers",serveStudent:"Students & pupils",serveCareer:"Career changers",serveHand:"Tradespeople & construction",serveGastro:"Hospitality",serveLog:"Logistics & warehouse",
+    aboutH2:"Our Strengths",aboutP2:"Specialised in skilled and auxiliary workers across many industries. We place candidates quickly, discreetly and professionally.",
+    aboutH3:"Multilingual & personal",aboutP3:"Our team speaks German, English and Arabic. We personally guide you through the entire application process.",
+    kontaktT:"Contact",kontaktS:"We look forward to hearing from you",
+    addrLbl:"Address",phoneLbl:"Phone",emailLbl:"Email",hoursLbl:"Opening hours",
+    addr:"[Address to be added] · Berlin",phVal:"[Phone to be added]",emVal:"[Email to be added]",hrVal:"Mon – Fri: 09:00 – 18:00",
+    dsLinkWord:"Privacy Policy"
+  },
+  ar:{
+    tagline:"مسيرتك المهنية. مهمتنا.",dir:"rtl",
+    navCand:"المتقدمون",navCo:"الشركات",navAbout:"من نحن",navDs:"الخصوصية",navImp:"بيانات قانونية",
+    formTitle:"قدّم طلبك الآن",formSub:"املأ النموذج وارفع سيرتك الذاتية. سنتواصل معك قريباً.",
+    lblName:"الاسم الكامل",lblPhone:"رقم الهاتف",lblEmail:"البريد الإلكتروني",lblLanguage:"اللغة",lblSector:"القطاع / المجال",secPH:"اختر...",
+    lblWho:"أنا...",
+    whoWorkerT:"موظف / عامل",whoWorkerD:"كادر متخصص أو عامل عادي",
+    whoStudentT:"طالب / تلميذ",whoStudentD:"وظيفة طلابية أو تدريب",
+    whoAnyT:"تغيير مسار مهني",whoAnyD:"بدون مجال محدد",
+    studentPanelLbl:"نوع الوظيفة الطلابية",
+    optWerkstudent:"طالب عامل",optPraktikum:"تدريب عملي",optMinijobS:"وظيفة صغيرة (€ 556)",optWeekend:"عطلة نهاية الأسبوع فقط",
+    lblGoal:"ما هو هدفك؟",
+    gmT:"كسب المال بسرعة",gmD:"وظائف قصيرة المدى لدخل فوري",
+    gcT:"عقد عمل طويل الأمد",gcD:"وظيفة دائمة مع أمان وظيفي",
+    gfT:"عمل بالمشاريع / مؤقت",gfD:"عمل مرن بدون عقد ثابت",
+    goT:"منفتح على كل الخيارات",goD:"سأرى ما يناسبني",
+    pContLbl:"نوع العقد",optVoll:"دوام كامل",optTeil:"دوام جزئي",optMini:"وظيفة صغيرة (€ 556)",optMidi:"وظيفة متوسطة",
+    pFreeLbl:"نوع التعاون",optZeit:"عمل مؤقت / وكالة",optProj:"على أساس مشاريع",optSelf:"عمل حر / مستقل",optAus:"تغطية / احتياطي",
+    lblDesc:"صف ما تريد",descPH:"الخبرة، الوظيفة المرغوبة، ساعات العمل...",
+    lblCv:"رفع السيرة الذاتية",upClick:"اختر ملفاً",upOr:" أو اسحبه هنا",
+    consCand:"لقد قرأت [DS] وأوافق على تخزين بياناتي ومعالجتها لأغراض التوظيف.",
+    submitCand:"إرسال الطلب",sCandT:"✓ تم استلام طلبك!",sCandP:"شكراً! سنتواصل معك قريباً.",
+    coHeroT:"إيجاد الموظفين بكل سهولة",coHeroS:"أخبرنا باحتياجاتك — سنجد المرشحين المناسبين لشركتك في برلين.",
+    lblCoName:"اسم الشركة",lblCoContact:"الشخص المسؤول",lblCoEmail:"البريد الإلكتروني",lblCoPhone:"الهاتف",
+    lblCoSector:"القطاع",coSecPH:"اختر...",lblCoCount:"عدد الموظفين المطلوبين",
+    lblCoType:"نوع التوظيف",
+    coVoll:"دوام كامل",coTeil:"دوام جزئي",coMini:"وظيفة صغيرة",coZeit:"عمل مؤقت",coProj:"مشاريع",coStudentJob:"وظائف طلابية",coPrak:"تدريب",coAus:"تغطية",
+    lblCoSkills:"المؤهلات / المتطلبات",coSkillsPH:"الوظيفة، الخبرة، اللغات، المناوبات...",
+    lblCoStart:"تاريخ البدء",coStartPH:"مثلاً: فوراً، من 01.08.2025",
+    consCo:"لقد قرأت [DS] وأوافق على معالجة بيانات شركتي لأغراض التوظيف.",
+    submitCo:"إرسال الطلب",sCoT:"✓ تم استلام طلبك!",sCoP:"شكراً! سنتواصل معك خلال 24 ساعة.",
+    aboutT:"من نحن",aboutS:"من نكون وما الذي يحركنا",
+    aboutH1:"مهمتنا",aboutP1:"وكالة TA للتوظيف تربط الكوادر المؤهلة بأصحاب العمل المناسبين في برلين. نؤمن بأن لكل إنسان حق في الوصول العادل إلى سوق العمل — سواء كان متخصصاً أو طالباً أو باحثاً عن فرصة جديدة.",
+    aboutHServe:"الوظيفة المناسبة للجميع",aboutPServe:"نساعد الناس من جميع الخلفيات — من المحترفين ذوي الخبرة إلى الطلاب الراغبين في العمل جانباً.",
+    serveWorker:"عمال متخصصون وعاديون",serveStudent:"طلاب وتلاميذ",serveCareer:"تغيير المسار المهني",serveHand:"حرفيون وبناء",serveGastro:"مطاعم وضيافة",serveLog:"لوجستيك ومستودعات",
+    aboutH2:"نقاط قوتنا",aboutP2:"متخصصون في توظيف الكوادر في قطاعات متعددة. بفضل شبكتنا الواسعة في برلين، نوظّف بسرعة واحترافية.",
+    aboutH3:"متعدد اللغات وشخصي",aboutP3:"فريقنا يتحدث الألمانية والإنجليزية والعربية. نرافقك شخصياً خلال كامل عملية التقديم.",
+    kontaktT:"تواصل معنا",kontaktS:"يسعدنا سماعك",
+    addrLbl:"العنوان",phoneLbl:"الهاتف",emailLbl:"البريد",hoursLbl:"ساعات العمل",
+    addr:"[العنوان سيُضاف] · برلين",phVal:"[الهاتف سيُضاف]",emVal:"[البريد سيُضاف]",hrVal:"الإثنين – الجمعة: 09:00 – 18:00",
+    dsLinkWord:"سياسة الخصوصية"
+  }
+};
+
+function setLang(lang){
+  const l=T[lang];
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===lang.toUpperCase()));
+  document.body.setAttribute('dir',l.dir);
+  const s=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt};
+  const p=(id,txt)=>{const el=document.getElementById(id);if(el)el.placeholder=txt};
+  const dsLink=`<a onclick="showPage('datenschutz')">${l.dsLinkWord}</a>`;
+  s('tagline',l.tagline);
+  s('nav-candidates',l.navCand);s('nav-companies',l.navCo);s('nav-about',l.navAbout);
+  s('nav-datenschutz',l.navDs);s('nav-impressum',l.navImp);s('nav-admin-login','Admin');
+  s('form-title',l.formTitle);s('form-sub',l.formSub);
+  s('lbl-name',l.lblName);s('lbl-phone',l.lblPhone);s('lbl-email',l.lblEmail);s('lbl-language',l.lblLanguage||'Language');
+  s('lbl-sector',l.lblSector);s('sector-ph',l.secPH);
+  s('lbl-who',l.lblWho);
+  s('who-worker-title',l.whoWorkerT);s('who-worker-desc',l.whoWorkerD);
+  s('who-student-title',l.whoStudentT);s('who-student-desc',l.whoStudentD);
+  s('who-any-title',l.whoAnyT);s('who-any-desc',l.whoAnyD);
+  s('student-panel-lbl',l.studentPanelLbl);
+  s('opt-werkstudent',l.optWerkstudent);s('opt-praktikum',l.optPraktikum);
+  s('opt-minijob-s',l.optMinijobS);s('opt-weekend',l.optWeekend);
+  s('lbl-goal',l.lblGoal);
+  s('gm-title',l.gmT);s('gm-desc',l.gmD);s('gc-title',l.gcT);s('gc-desc',l.gcD);
+  s('gf-title',l.gfT);s('gf-desc',l.gfD);s('go-title',l.goT);s('go-desc',l.goD);
+  s('panel-contract-lbl',l.pContLbl);s('opt-vollzeit',l.optVoll);s('opt-teilzeit',l.optTeil);
+  s('opt-minijob',l.optMini);s('opt-midi',l.optMidi);
+  s('panel-freelance-lbl',l.pFreeLbl);s('opt-zeit',l.optZeit);s('opt-proj',l.optProj);
+  s('opt-self',l.optSelf);s('opt-aus',l.optAus);
+  s('lbl-desc',l.lblDesc);p('description',l.descPH);
+  s('lbl-cv',l.lblCv);s('upload-click',l.upClick);s('upload-or',l.upOr);
+  document.getElementById('consent-cand-txt').innerHTML=l.consCand.replace('[DS]',dsLink);
+  s('submit-btn',l.submitCand);s('s-title',l.sCandT);s('s-text',l.sCandP);
+  s('co-hero-title',l.coHeroT);s('co-hero-sub',l.coHeroS);
+  s('lbl-co-name',l.lblCoName);s('lbl-co-contact',l.lblCoContact);
+  s('lbl-co-email',l.lblCoEmail);s('lbl-co-phone',l.lblCoPhone);
+  s('lbl-co-sector',l.lblCoSector);s('co-sector-ph',l.coSecPH);
+  s('lbl-co-count',l.lblCoCount);s('lbl-co-type',l.lblCoType);
+  s('co-vollzeit',l.coVoll);s('co-teilzeit',l.coTeil);s('co-minijob',l.coMini);
+  s('co-zeit',l.coZeit);s('co-proj',l.coProj);s('co-student-job',l.coStudentJob);
+  s('co-praktikum',l.coPrak);s('co-aus',l.coAus);
+  s('lbl-co-skills',l.lblCoSkills);p('co-skills',l.coSkillsPH);
+  s('lbl-co-start',l.lblCoStart);p('co-start',l.coStartPH);
+  document.getElementById('consent-co-txt').innerHTML=l.consCo.replace('[DS]',dsLink);
+  s('co-submit-btn',l.submitCo);s('co-s-title',l.sCoT);s('co-s-text',l.sCoP);
+  s('about-title',l.aboutT);s('about-sub',l.aboutS);
+  s('about-h1',l.aboutH1);s('about-p1',l.aboutP1);
+  s('about-h-serve',l.aboutHServe);s('about-p-serve',l.aboutPServe);
+  s('serve-worker',l.serveWorker);s('serve-student',l.serveStudent);
+  s('serve-career',l.serveCareer);s('serve-hand',l.serveHand);
+  s('serve-gastro',l.serveGastro);s('serve-log',l.serveLog);
+  s('about-h2',l.aboutH2);s('about-p2',l.aboutP2);
+  s('about-h3',l.aboutH3);s('about-p3',l.aboutP3);
+  s('kontakt-title',l.kontaktT);s('kontakt-sub',l.kontaktS);
+  s('c-addr-lbl',l.addrLbl);s('c-phone-lbl',l.phoneLbl);
+  s('c-email-lbl',l.emailLbl);s('c-hours-lbl',l.hoursLbl);
+  s('c-addr',l.addr);s('c-phone',l.phVal);s('c-email',l.emVal);s('c-hours',l.hrVal);
+}
+</script>
+</body>
+</html>
