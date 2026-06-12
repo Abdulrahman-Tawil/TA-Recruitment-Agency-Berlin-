@@ -106,11 +106,6 @@ select option{background:var(--navy2)}
 .card-actions{display:flex;gap:8px;flex-wrap:wrap}.mini-btn{background:var(--navy3);border:1px solid var(--border);color:#dde4ef;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12px}.mini-btn.gold{background:var(--gold);color:var(--navy);border-color:var(--gold)}
 body.light .mini-btn{color:#0a1628}
 @media(max-width:640px){.admin-grid{grid-template-columns:1fr}}
-.hidden{display:none!important}
-.cv-link{color:var(--gold);text-decoration:none;font-weight:500}
-.error-msg{display:none;background:rgba(239,68,68,.12);border:1px solid #ef4444;border-radius:6px;padding:1rem;text-align:center;margin-top:1rem;color:#ef4444;font-size:13px}
-body.light .check-item span, body.light .candidate-meta, body.light .about-card p, body.light .contact-row{color:#26364f}
-
 
 footer{text-align:center;padding:1.2rem;border-top:1px solid var(--border);color:var(--text-muted);font-size:11px;letter-spacing:1px}
 footer span{color:var(--gold)}
@@ -491,7 +486,7 @@ footer a{color:var(--gold);cursor:pointer;text-decoration:none}
       <h2 class="section-title" style="text-align:left;margin-bottom:.2rem">TA Recruitment Dashboard</h2>
       <p class="section-sub" style="text-align:left;margin-bottom:0">Candidate Management System / Recruitment CRM</p>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div class="admin-pill">Role: <strong id="admin-role">Admin</strong></div><button class="mini-btn" onclick="adminLogout()">Logout</button></div>
+    <div class="admin-pill">Role: <strong id="admin-role">Super Admin</strong></div>
   </div>
 
   <div class="admin-grid">
@@ -585,53 +580,10 @@ function handleFile(input,tid){
   if(input.files.length>0){fn.textContent='📎 '+input.files[0].name;fn.style.display='block'}
 }
 
-async function submitForm(type,e){
+function submitForm(type,e){
   e.preventDefault();
-
-  if(type==='co'){
-    document.getElementById('co-form').style.display='none';
-    document.getElementById('co-success').style.display='block';
-    return;
-  }
-
-  if(!supabaseClient){
-    alert('Supabase is not connected. Check SUPABASE_URL and SUPABASE_KEY.');
-    return;
-  }
-
-  const cvInput=document.getElementById('cv-file');
-  const cv=cvInput.files[0];
-  if(!cv){ alert('CV is required.'); return; }
-
-  const btn=document.getElementById('submit-btn');
-  const oldText=btn.textContent;
-  btn.disabled=true; btn.textContent='SENDING...';
-
-  try{
-    const safeName=(document.getElementById('name').value||'candidate').replace(/[^a-z0-9_-]+/gi,'_');
-    const path=`public/${Date.now()}_${safeName}_${cv.name}`;
-    const upload=await supabaseClient.storage.from('candidate-cvs').upload(path,cv,{upsert:false});
-    if(upload.error) throw upload.error;
-
-    const payload={
-      full_name:document.getElementById('name').value,
-      phone:document.getElementById('phone').value,
-      email:document.getElementById('email').value || null,
-      language:document.getElementById('language').value,
-      status:'looking',
-      notes:document.getElementById('description').value || null,
-      cv_url:path
-    };
-    const ins=await supabaseClient.from('candidates').insert(payload);
-    if(ins.error) throw ins.error;
-
-    document.getElementById('cand-form').style.display='none';
-    document.getElementById('cand-success').style.display='block';
-  }catch(err){
-    alert('Submission failed: '+err.message+'\n\nIf this is the public form, run the public INSERT policies I gave you in Supabase.');
-  }finally{
-    btn.disabled=false; btn.textContent=oldText;
-  }
+  document.getElementById(type==='cand'?'cand-form':'co-form').style.display='none';
+  document.getElementById(type==='cand'?'cand-success':'co-success').style.display='block';
 }
 
 
@@ -652,11 +604,11 @@ async function adminLogin(e){
   const password=document.getElementById('admin-password').value;
 
   if(!supabaseClient){
-    alert('Supabase is not connected. Check SUPABASE_URL and SUPABASE_KEY.');
+    alert('Supabase URL is already set. Now paste your public anon/publishable key in SUPABASE_KEY.');
     return;
   }
 
-  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
   if(error){
     alert('Login failed: '+error.message);
     return;
@@ -665,140 +617,54 @@ async function adminLogin(e){
   document.getElementById('admin-login-form').style.display='none';
   document.getElementById('admin-login-msg').style.display='block';
   showPage('admin-dashboard');
-  await loadCandidates();
 }
 
-async function adminLogout(){
-  if(supabaseClient) await supabaseClient.auth.signOut();
-  document.getElementById('admin-login-form').style.display='block';
-  document.getElementById('admin-login-msg').style.display='none';
-  showPage('admin-login');
-}
-
-let candidates=[];
-
-async function uploadCv(file, prefix='admin'){
-  if(!file) return null;
-  const safe=file.name.replace(/[^a-z0-9_.-]+/gi,'_');
-  const path=`${prefix}/${Date.now()}_${safe}`;
-  const { error } = await supabaseClient.storage.from('candidate-cvs').upload(path,file,{upsert:false});
-  if(error) throw error;
-  return path;
-}
-
-async function saveCandidate(e){
+let candidates=JSON.parse(localStorage.getItem('ta-candidates')||'[]');
+function saveCandidate(e){
   e.preventDefault();
-  if(!supabaseClient){ alert('Supabase is not connected.'); return; }
-
-  const editId=document.getElementById('edit-index').value;
-  const cvFile=document.getElementById('ad-cv').files[0];
-  const current=candidates.find(c=>c.id===editId);
-
-  if(!editId && !cvFile){ alert('CV is required for new candidates.'); return; }
-
-  const btn=e.target.querySelector('button[type="submit"]');
-  const oldText=btn.textContent;
-  btn.disabled=true; btn.textContent='SAVING...';
-
-  try{
-    let cvPath=current?.cv_url || null;
-    if(cvFile) cvPath=await uploadCv(cvFile,'admin');
-
-    const payload={
-      full_name:document.getElementById('ad-name').value,
-      phone:document.getElementById('ad-phone').value,
-      language:document.getElementById('ad-language').value,
-      email:document.getElementById('ad-email').value || null,
-      status:document.getElementById('ad-status').value,
-      notes:document.getElementById('ad-notes').value || null,
-      cv_url:cvPath
-    };
-
-    let res;
-    if(editId){
-      res=await supabaseClient.from('candidates').update(payload).eq('id',editId);
-    }else{
-      res=await supabaseClient.from('candidates').insert(payload);
-    }
-    if(res.error) throw res.error;
-
-    e.target.reset();
-    document.getElementById('edit-index').value='';
-    document.getElementById('ad-cv').required=true;
-    await loadCandidates();
-  }catch(err){
-    alert('Save failed: '+err.message);
-  }finally{
-    btn.disabled=false; btn.textContent=oldText;
-  }
-}
-
-function statusLabel(s){return s==='looking'?'Looking for job':s==='found'?'Found job':s==='pending'?'Missing info / follow-up':'Archived'}
-
-async function getCvLink(path){
-  if(!path || !supabaseClient) return '#';
-  const { data, error }=await supabaseClient.storage.from('candidate-cvs').createSignedUrl(path,60*10);
-  if(error) return '#';
-  return data.signedUrl;
-}
-
-async function loadCandidates(){
-  if(!supabaseClient) return;
-  const { data, error } = await supabaseClient.from('candidates').select('*').order('created_at',{ascending:false});
-  if(error){ alert('Could not load candidates: '+error.message); return; }
-  candidates=data||[];
+  const cv=document.getElementById('ad-cv').files[0];
+  const edit=document.getElementById('edit-index').value;
+  const item={
+    name:document.getElementById('ad-name').value,
+    phone:document.getElementById('ad-phone').value,
+    language:document.getElementById('ad-language').value,
+    email:document.getElementById('ad-email').value,
+    status:document.getElementById('ad-status').value,
+    cvName:cv?cv.name:(edit!==''?candidates[edit].cvName:''),
+    notes:document.getElementById('ad-notes').value,
+    updatedAt:new Date().toISOString().slice(0,10)
+  };
+  if(edit==='') candidates.push(item); else candidates[edit]=item;
+  localStorage.setItem('ta-candidates',JSON.stringify(candidates));
+  e.target.reset(); document.getElementById('edit-index').value='';
+  document.getElementById('ad-cv').required=true;
   renderCandidates();
 }
-
-async function renderCandidates(){
+function statusLabel(s){return s==='looking'?'Looking for job':s==='found'?'Found job':s==='pending'?'Missing info / follow-up':'Archived'}
+function renderCandidates(){
   const q=(document.getElementById('candidate-search')?.value||'').toLowerCase();
   const f=document.getElementById('candidate-filter')?.value||'all';
   const list=document.getElementById('candidate-list'); if(!list) return;
   list.innerHTML='';
-  const filtered=candidates.filter(c=>{
-    if(f!=='all' && c.status!==f) return false;
-    const blob=[c.full_name,c.phone,c.language,c.email,c.notes].join(' ').toLowerCase();
-    return !q || blob.includes(q);
-  });
-  if(filtered.length===0){ list.innerHTML='<p class="section-sub" style="text-align:left">No candidates found.</p>'; return; }
-  for(const c of filtered){
-    const cvLink=await getCvLink(c.cv_url);
+  candidates.forEach((c,i)=>{
+    if(f!=='all' && c.status!==f) return;
+    const blob=(c.name+' '+c.phone+' '+c.language+' '+c.email+' '+c.notes).toLowerCase();
+    if(q && !blob.includes(q)) return;
     const div=document.createElement('div'); div.className='candidate-card';
-    const cvName=c.cv_url ? c.cv_url.split('/').pop() : '-';
-    div.innerHTML=`<h4><span class="status-dot st-${c.status||'looking'}"></span>${escapeHtml(c.full_name||'-')}</h4><div class="candidate-meta">Phone: ${escapeHtml(c.phone||'-')}<br>Language: ${escapeHtml(c.language||'-')}<br>Email: ${escapeHtml(c.email||'-')}<br>CV: ${c.cv_url?`<a class="cv-link" href="${cvLink}" target="_blank" rel="noopener">${escapeHtml(cvName)}</a>`:'-'}<br>Status: ${statusLabel(c.status||'looking')}<br>Created: ${(c.created_at||'').slice(0,10)||'-'}<br>Notes: ${escapeHtml(c.notes||'-')}</div><div class="card-actions"><button class="mini-btn gold" onclick="editCandidate('${c.id}')">Edit</button><button class="mini-btn" onclick="deleteCandidate('${c.id}')">Delete</button></div>`;
+    div.innerHTML=`<h4><span class="status-dot st-${c.status}"></span>${c.name}</h4><div class="candidate-meta">Phone: ${c.phone}<br>Language: ${c.language}<br>Email: ${c.email||'-'}<br>CV: ${c.cvName||'-'}<br>Status: ${statusLabel(c.status)}<br>Updated: ${c.updatedAt||'-'}<br>Notes: ${c.notes||'-'}</div><div class="card-actions"><button class="mini-btn gold" onclick="editCandidate(${i})">Edit</button><button class="mini-btn" onclick="deleteCandidate(${i})">Delete</button></div>`;
     list.appendChild(div);
-  }
+  });
 }
-
-function escapeHtml(str){
-  return String(str).replace(/[&<>'"]/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s]));
-}
-
-function editCandidate(id){
-  const c=candidates.find(x=>x.id===id); if(!c) return;
-  showPage('admin-dashboard');
-  document.getElementById('edit-index').value=c.id;
-  document.getElementById('ad-name').value=c.full_name||'';
-  document.getElementById('ad-phone').value=c.phone||'';
-  document.getElementById('ad-language').value=c.language||'';
-  document.getElementById('ad-email').value=c.email||'';
-  document.getElementById('ad-status').value=c.status||'looking';
-  document.getElementById('ad-notes').value=c.notes||'';
+function editCandidate(i){
+  const c=candidates[i]; showPage('admin-dashboard');
+  document.getElementById('edit-index').value=i;
+  document.getElementById('ad-name').value=c.name; document.getElementById('ad-phone').value=c.phone;
+  document.getElementById('ad-language').value=c.language; document.getElementById('ad-email').value=c.email||'';
+  document.getElementById('ad-status').value=c.status; document.getElementById('ad-notes').value=c.notes||'';
   document.getElementById('ad-cv').required=false;
 }
-
-async function deleteCandidate(id){
-  if(!confirm('Delete this candidate?')) return;
-  const { error }=await supabaseClient.from('candidates').delete().eq('id',id);
-  if(error){ alert('Delete failed: '+error.message); return; }
-  await loadCandidates();
-}
-
-setTimeout(async()=>{
-  if(!supabaseClient) return;
-  const { data }=await supabaseClient.auth.getSession();
-  if(data?.session){ await loadCandidates(); }
-},0);
+function deleteCandidate(i){if(confirm('Delete this candidate?')){candidates.splice(i,1);localStorage.setItem('ta-candidates',JSON.stringify(candidates));renderCandidates();}}
+setTimeout(renderCandidates,0);
 
 const T={
   de:{
